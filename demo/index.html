@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+  <head>
+    <title>radial-progress demo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+
+    <link rel="import" href="../radial-progress.html">
+
+    <style is="custom-style" include="demo-pages-shared-styles">
+    </style>
+
+    <style is="custom-style">
+	radial-progress.blue {
+		--circle-size: 50px;
+		--half-circle-size: 25px;
+		--circle-color: lightblue;
+                --inset-size: 0px;
+		--circle-background: white;
+	}
+	radial-progress.green {
+		--circle-size: 100px;
+		--half-circle-size: 50px;
+		--circle-color: #226600;
+                --inset-size: 80px;
+		--circle-background: #ddd;
+	}
+    </style>
+  </head>
+  <body>
+
+    <div class="vertical-section-container centered" style="max-width: 600px">
+      <h3>Radial progressbar with completeness in percent</h3>
+      <demo-snippet>
+        <template>
+          <radial-progress></radial-progress>
+          <radial-progress progress="10"></radial-progress>
+          <radial-progress progress="33"></radial-progress>
+          <radial-progress progress="75"></radial-progress>
+          <radial-progress progress="100"></radial-progress>
+        </template>
+      </demo-snippet>
+      
+      <h3>Radial progressbar big, no inset</h3>
+      <demo-snippet>
+        <template>
+          <radial-progress class="blue"></radial-progress>
+          <radial-progress class="blue" progress="15"></radial-progress>
+          <radial-progress class="blue" progress="25"></radial-progress>
+          <radial-progress class="blue" progress="66"></radial-progress>
+          <radial-progress class="blue" progress="100"></radial-progress>
+        </template>
+      </demo-snippet>
+
+      <h3>Radial progressbar very big</h3>
+      <demo-snippet>
+        <template>
+          <radial-progress class="green"></radial-progress>
+          <radial-progress class="green" progress="1"></radial-progress>
+          <radial-progress class="green" progress="45"></radial-progress>
+          <radial-progress class="green" progress="98"></radial-progress>
+          <radial-progress class="green" progress="100"></radial-progress>
+        </template>
+      </demo-snippet>
+    </div>
+  </body>
+</html>

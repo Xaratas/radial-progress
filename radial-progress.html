@@ -1,0 +1,115 @@
+<link rel="import" href="../polymer/polymer.html">
+<!--
+Circular Progressbar made as component from this one http://jsfiddle.net/andsens/32Y8U/ by Anders Ingemann but without less. (Was totally overkill, likewise the % number spans)
+Full story: https://medium.com/@andsens/radial-progress-indicator-using-css-a917b80c43f9#.1rtidev7t
+
+Default size is rather small, aligns with 16px font size.
+
+### Styling
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--circle-size` | Use even numbers or rounding bites back | 18px
+`--half-circle-size` | Has to be extra, ff bug | 9px
+`--circle-color` | The "Bar" color | ~"red"
+`--circle-background` | The non Bar color | ~"gray"
+`--inset-color` | The stamped out center of the circle | ~"white"
+
+@demo demo/index.html
+ -->
+<dom-module id="radial-progress">
+	<template strip-whitespace>
+		<style>
+			:host {
+				--circle-size: 18px;
+				--half-circle-size: 9px; /* ff bug, calc geht nicht in rect() calc(var(--circle-size) / 2); */ 
+				--circle-background: #d6dadc;
+				--circle-color: #ce360c;
+				--inset-size: 8px;
+				--inset-color: #fbfbfb; 
+
+				width:  var(--circle-size);
+				height: var(--circle-size);
+
+				background-color: var(--circle-background);
+				border-radius: 50%;
+				display: inline-block;
+				margin: 0px 5px 0 0;
+				vertical-align: top;
+			}
+
+			.circle	.mask, .circle .fill, .circle .shadow {
+				width:    var(--circle-size);
+				height:   var(--circle-size);
+				position: absolute;
+				border-radius: 50%;
+			}
+			.circle .shadow {
+				box-shadow: 2px 2px 3px rgba(0,0,0,0.2) inset;
+			}
+			.circle .mask, .circle .fill {
+				-webkit-backface-visibility: hidden;
+				transition: -webkit-transform 1s;
+				transition: -ms-transform 1s;
+				transition: transform 1s;
+			}
+			.circle .mask {
+				clip: rect(0px, var(--circle-size), var(--circle-size), var(--half-circle-size));
+			}
+			.circle	.fill {
+				clip: rect(0px, var(--half-circle-size), var(--circle-size), 0px);
+				background-color: var(--circle-color);
+			}
+		
+			.inset {
+				width:       var(--inset-size);
+				height:      var(--inset-size);
+				position:    absolute;
+				margin-left: calc((var(--circle-size) - var(--inset-size)) / 2);
+				margin-top:  calc((var(--circle-size) - var(--inset-size)) / 2);
+
+				background-color: var(--inset-color);
+				border-radius: 50%;
+				box-shadow: 2px 2px 3px rgba(0,0,0,0.2);
+			}
+		</style>
+
+		<div class="circle">
+			<div class="mask full" style$="[[transform(progress)]]">
+				<div class="fill" style$="[[transform(progress)]]"></div>
+			</div>
+			<div class="mask half">
+				<div class="fill" style$="[[transform(progress)]]"></div>
+				<div class="fill fix" style$="[[transformFix(progress)]]"></div>
+			</div>
+			<div class="shadow"></div>
+		</div>
+		<div class="inset"></div>
+	</template>
+	<script>
+	Polymer({
+		is: 'radial-progress',
+
+		properties: {
+			// in percent
+			progress: Number,
+			title: {
+				type: String,
+				value: "0%",
+				computed: '_setTooltip(progress)',
+				reflectToAttribute: true
+			}
+		},
+		_setTooltip(progress) {
+			return progress + "%";
+		},
+		// 1.8 = 1/2 * 3.6 -> 2 halbkreise, 3.6 = faktor für grad in prozent
+		transform: function(percent) {	
+			return 'transform: rotate(' + percent * 1.8 + 'deg)';
+		},
+		transformFix: function(percent) {
+			return 'transform: rotate(' + (2 * percent * 1.8) + 'deg)';
+		}
+	});
+	</script>
+</dom-module>

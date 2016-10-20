@@ -1,0 +1,57 @@
+<!doctype html>
+
+<html>
+  <head>
+    <title>radial-progress test</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../radial-progress.html">
+  </head>
+  <body>
+
+    <test-fixture id="basic">
+      <template>
+        <radial-progress></radial-progress>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="half">
+      <template>
+        <radial-progress progress="50"></radial-progress>
+      </template>
+    </test-fixture>
+    <script>
+      suite('radial-progress', function() {
+
+        test('instantiating the element works', function() {
+          var element = fixture('basic');
+          assert.equal(element.is, 'radial-progress');
+        });
+	
+	test('50% should be something and 25% something other', function() {
+          var element = fixture('half');
+          assert.equal(element.getElementsByClassName('full')[0].getAttribute('style').indexOf('transform: rotate(90deg)'), 0);
+          assert.equal(element.getElementsByClassName('fill')[0].getAttribute('style').indexOf('transform: rotate(90deg)'), 0);
+          assert.equal(element.getElementsByClassName('fill')[1].getAttribute('style').indexOf('transform: rotate(90deg)'), 0);
+          assert.equal(element.getElementsByClassName('fill')[2].getAttribute('style').indexOf('transform: rotate(180deg)'), 0);
+          
+          element.progress = 25;
+          assert.equal(element.getElementsByClassName('full')[0].getAttribute('style').indexOf('transform: rotate(45deg)'), 0);
+          assert.equal(element.getElementsByClassName('fill')[0].getAttribute('style').indexOf('transform: rotate(45deg)'), 0);
+          assert.equal(element.getElementsByClassName('fill')[1].getAttribute('style').indexOf('transform: rotate(45deg)'), 0);
+          assert.equal(element.getElementsByClassName('fill')[2].getAttribute('style').indexOf('transform: rotate(90deg)'), 0);
+	});
+
+	test('Has a tooltip', function() {
+          var element = fixture('basic');
+          assert.equal(element.getAttribute('title'), '0%');
+          element = fixture('half');
+          assert.equal(element.getAttribute('title'), '50%');
+        });
+      });
+    </script>
+  </body>
+</html>

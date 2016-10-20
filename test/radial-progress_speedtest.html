@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+    <title>radial-progress speed test</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <script src="../../polyperf/perf-lib/perf.js"></script>
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../radial-progress.html">
+  </head>
+  <body>
+  <script>
+    console.perf();
+  </script>
+
+    <radial-progress progress="50"></radial-progress>
+
+  <script>
+    console.perfEnd();
+  </script>
+  </body>
+</html>
